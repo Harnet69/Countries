@@ -7,18 +7,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.harnet.countries.viewModel.CountriesViewModel
 import com.harnet.countries.R
+import com.harnet.countries.databinding.CountriesFragmentBinding
 import com.harnet.countries.util.setActivityTitle
+import kotlinx.android.synthetic.main.countries_fragment.*
 
 class CountriesFragment : Fragment() {
+
+    lateinit var dataBinding: CountriesFragmentBinding
 
     private lateinit var viewModel: CountriesViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.countries_fragment, container, false)
+                              savedInstanceState: Bundle?): View {
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.countries_fragment, container, false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +43,7 @@ class CountriesFragment : Fragment() {
         viewModel.getCountries().observe(viewLifecycleOwner, Observer { countriesList ->
             if(countriesList.isNotEmpty()){
                 //TODO refresh RecyclerView with new countryList, show countries recyclerView block
+                loading_progressBar.visibility = View.INVISIBLE
                 Log.i("countriesFromApi", "onViewCreated: $countriesList")
 
             }
@@ -44,17 +51,23 @@ class CountriesFragment : Fragment() {
         })
 
         viewModel.getIsLoading().observe(viewLifecycleOwner, Observer {isLoading ->
-            if(isLoading){
-                //TODO hide countries recyclerView block, show progressbar
-
-            }else{
-                //TODO hide progress bar
+            isLoading?.let {
+                if(isLoading){
+                    //TODO hide countries recyclerView block
+                    loading_progressBar.visibility = View.VISIBLE
+                }else{
+                    //TODO hide progress bar
+                    loading_progressBar.visibility = View.INVISIBLE
+                }
             }
+
         })
 
         viewModel.getErrorLoading().observe(viewLifecycleOwner, Observer {isError ->
             if(isError){
-                //TODO show error message, hide progress bar and countries RecyclerViewBlock
+                error_message.visibility = View.VISIBLE
+                loading_progressBar.visibility = View.INVISIBLE
+                //TODO hide countries RecyclerViewBlock
             }
         })
     }
