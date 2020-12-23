@@ -1,4 +1,4 @@
-package com.harnet.countries
+package com.harnet.countries.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.harnet.countries.viewModel.CountriesViewModel
+import com.harnet.countries.R
 
 class CountriesFragment : Fragment() {
 

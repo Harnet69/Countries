@@ -1,4 +1,4 @@
-package com.harnet.countries
+package com.harnet.countries.viewModel
 
 import androidx.lifecycle.ViewModel
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/countriesFragment"
-        android:name="com.harnet.countries.CountriesFragment"
+        android:name="com.harnet.countries.view.CountriesFragment"
         android:label="countries_fragment"
         tools:layout="@layout/countries_fragment" />
 </navigation>
