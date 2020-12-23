@@ -42,8 +42,9 @@ class CountriesFragment : Fragment() {
     private fun observeModel(){
         viewModel.getCountries().observe(viewLifecycleOwner, Observer { countriesList ->
             if(countriesList.isNotEmpty()){
-                //TODO refresh RecyclerView with new countryList, show countries recyclerView block
+                //TODO refresh RecyclerView with new countryList
                 loading_progressBar.visibility = View.INVISIBLE
+                countries_recyclerView.visibility = View.VISIBLE
                 Log.i("countriesFromApi", "onViewCreated: $countriesList")
 
             }
@@ -53,10 +54,10 @@ class CountriesFragment : Fragment() {
         viewModel.getIsLoading().observe(viewLifecycleOwner, Observer {isLoading ->
             isLoading?.let {
                 if(isLoading){
-                    //TODO hide countries recyclerView block
+                    countries_recyclerView.visibility = View.INVISIBLE
                     loading_progressBar.visibility = View.VISIBLE
                 }else{
-                    //TODO hide progress bar
+                    countries_recyclerView.visibility = View.VISIBLE
                     loading_progressBar.visibility = View.INVISIBLE
                 }
             }
@@ -67,7 +68,7 @@ class CountriesFragment : Fragment() {
             if(isError){
                 error_message.visibility = View.VISIBLE
                 loading_progressBar.visibility = View.INVISIBLE
-                //TODO hide countries RecyclerViewBlock
+                countries_recyclerView.visibility = View.INVISIBLE
             }
         })
     }

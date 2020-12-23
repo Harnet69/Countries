@@ -3,8 +3,11 @@ package com.harnet.countries.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.countries.model.Country
+import kotlinx.coroutines.*
 
 class CountriesViewModel : ViewModel() {
+
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     private val mCountries = MutableLiveData<List<Country>>()
     private val mIsLoading = MutableLiveData<Boolean>()
@@ -32,8 +35,13 @@ class CountriesViewModel : ViewModel() {
         countries.add(Country("Lithuania", "Vilnius", ""))
 
         if(countries.isNotEmpty()){
-            mCountries.value = countries
-            mIsLoading.value = false
+            coroutineScope.launch {
+                coroutineScope.async {
+                    delay(3000)
+                    mCountries.value = countries
+                    mIsLoading.value = false
+                }
+            }
         }
 
         //TODO mIsLoading.value = false and mErrorLoading = true if Retrofit can't get a data
