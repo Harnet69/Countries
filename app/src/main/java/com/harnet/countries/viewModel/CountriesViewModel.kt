@@ -7,14 +7,20 @@ import com.harnet.countries.model.Country
 class CountriesViewModel : ViewModel() {
 
     private val mCountries = MutableLiveData<List<Country>>()
+    private val mIsLoading = MutableLiveData<Boolean>()
+    private val mErrorLoading = MutableLiveData<Boolean>()
 
-    fun getMCountries() = mCountries
+    fun getCountries() = mCountries
+    fun getIsLoading() = mIsLoading
+    fun getErrorLoading() = mErrorLoading
 
     fun refresh(){
         getCountryFromAPI()
     }
 
     private fun getCountryFromAPI(){
+        mIsLoading.value = true
+
         val countries = mutableListOf<Country>()
     // mock countries getting
         //TODO implement Retrofit functionality here
@@ -27,6 +33,9 @@ class CountriesViewModel : ViewModel() {
 
         if(countries.isNotEmpty()){
             mCountries.value = countries
+            mIsLoading.value = false
         }
+
+        //TODO mIsLoading.value = false and mErrorLoading = true if Retrofit can't get a data
     }
 }

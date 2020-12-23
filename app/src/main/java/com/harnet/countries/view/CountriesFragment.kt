@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.harnet.countries.viewModel.CountriesViewModel
 import com.harnet.countries.R
+import com.harnet.countries.util.setActivityTitle
 
 class CountriesFragment : Fragment() {
 
@@ -24,6 +25,8 @@ class CountriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(CountriesViewModel::class.java)
 
+        setActivityTitle("Countries list")
+
         viewModel.refresh()
 
         observeModel()
@@ -31,11 +34,29 @@ class CountriesFragment : Fragment() {
     }
 
     private fun observeModel(){
+        viewModel.getCountries().observe(viewLifecycleOwner, Observer { countriesList ->
+            if(countriesList.isNotEmpty()){
+                //TODO refresh RecyclerView with new countryList, show countries recyclerView block
+                Log.i("countriesFromApi", "onViewCreated: $countriesList")
 
-        viewModel.getMCountries().observe(viewLifecycleOwner, Observer {
-            Log.i("countriesFromApi", "onViewCreated: $it")
+            }
+
         })
 
+        viewModel.getIsLoading().observe(viewLifecycleOwner, Observer {isLoading ->
+            if(isLoading){
+                //TODO hide countries recyclerView block, show progressbar
+
+            }else{
+                //TODO hide progress bar
+            }
+        })
+
+        viewModel.getErrorLoading().observe(viewLifecycleOwner, Observer {isError ->
+            if(isError){
+                //TODO show error message, hide progress bar and countries RecyclerViewBlock
+            }
+        })
     }
 
 }
