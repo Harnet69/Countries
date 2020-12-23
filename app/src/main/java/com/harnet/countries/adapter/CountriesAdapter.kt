@@ -34,7 +34,7 @@ class CountriesAdapter(private var countriesList: ArrayList<Country>): RecyclerV
     class ImagesViewHolder(var view: ItemCountryBinding): RecyclerView.ViewHolder(view.root)
 
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
-        holder.view.countryName.text = countriesList[position].countryName
+        holder.view.countryName.text = countriesList[position].name
         holder.view.countryCapital.text = countriesList[position].capital
         //TODO Implement sending URL to image
     }
