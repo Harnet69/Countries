@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.countries.viewModel.CountriesViewModel
 import com.harnet.countries.R
+import com.harnet.countries.adapter.CountriesAdapter
 import com.harnet.countries.databinding.CountriesFragmentBinding
+import com.harnet.countries.model.Country
 import com.harnet.countries.util.setActivityTitle
 import kotlinx.android.synthetic.main.countries_fragment.*
 
 class CountriesFragment : Fragment() {
-
+    lateinit var countriesAdapter: CountriesAdapter
     lateinit var dataBinding: CountriesFragmentBinding
 
     private lateinit var viewModel: CountriesViewModel
@@ -29,11 +33,29 @@ class CountriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        countriesAdapter = CountriesAdapter(arrayListOf())
+
         viewModel = ViewModelProvider(this).get(CountriesViewModel::class.java)
 
         setActivityTitle("Countries list")
 
         viewModel.refresh()
+
+        countries_recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            //Fix blinking RecyclerView
+            countriesAdapter.setHasStableIds(true)
+            adapter = countriesAdapter
+        }
+
+        // add separation line between items
+        countries_recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                countries_recyclerView.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         observeModel()
 
@@ -42,10 +64,9 @@ class CountriesFragment : Fragment() {
     private fun observeModel(){
         viewModel.getCountries().observe(viewLifecycleOwner, Observer { countriesList ->
             if(countriesList.isNotEmpty()){
-                //TODO refresh RecyclerView with new countryList
                 loading_progressBar.visibility = View.INVISIBLE
                 countries_recyclerView.visibility = View.VISIBLE
-                Log.i("countriesFromApi", "onViewCreated: $countriesList")
+                countriesAdapter.updateCountriesList(countriesList as ArrayList<Country>)
 
             }
 
