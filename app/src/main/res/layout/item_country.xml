@@ -34,6 +34,15 @@
                 android:text="Name" />
 
             <TextView
+                android:id="@+id/countryFlagUrl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:visibility="gone"/>
+
+            <TextView
                 android:id="@+id/country_capital"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -1,5 +1,6 @@
 package com.harnet.countries.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -36,6 +37,7 @@ class CountriesAdapter(private var countriesList: ArrayList<Country>): RecyclerV
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
         holder.view.countryName.text = countriesList[position].name
         holder.view.countryCapital.text = countriesList[position].capital
+        holder.view.countryFlagUrl.text = countriesList[position].flag
         //TODO Implement sending URL to image
     }
 

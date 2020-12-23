@@ -74,7 +74,6 @@ class CountriesViewModel : ViewModel() {
                         mIsLoading.value = false
                         // print stack of error to handling it
                         e.printStackTrace()
-                        Log.i("RetrofitError", e.localizedMessage)
                     }
                 })
         )
