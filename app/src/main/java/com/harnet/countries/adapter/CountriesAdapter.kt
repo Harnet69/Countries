@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harnet.countries.R
 import com.harnet.countries.databinding.ItemCountryBinding
 import com.harnet.countries.model.Country
+import com.harnet.countries.util.getProgressDrawable
+import com.harnet.countries.util.loadImage
 
 class CountriesAdapter(private var countriesList: ArrayList<Country>): RecyclerView.Adapter<CountriesAdapter.ImagesViewHolder>() {
 
@@ -38,7 +40,7 @@ class CountriesAdapter(private var countriesList: ArrayList<Country>): RecyclerV
         holder.view.countryName.text = countriesList[position].name
         holder.view.countryCapital.text = countriesList[position].capital
         holder.view.countryFlagUrl.text = countriesList[position].flag
-        //TODO Implement sending URL to image
+        holder.view.countryFlag.loadImage(countriesList[position].flag, getProgressDrawable(holder.view.countryFlag.context))
     }
 
     override fun getItemCount(): Int {
