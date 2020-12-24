@@ -25,9 +25,12 @@ class CountriesFragment : Fragment() {
 
     private lateinit var viewModel: CountriesViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        dataBinding = DataBindingUtil.inflate(inflater, R.layout.countries_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        dataBinding =
+            DataBindingUtil.inflate(inflater, R.layout.countries_fragment, container, false)
         return dataBinding.root
     }
 
@@ -44,8 +47,6 @@ class CountriesFragment : Fragment() {
 
         countries_recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            //Fix blinking RecyclerView
-            countriesAdapter.setHasStableIds(true)
             adapter = countriesAdapter
         }
 
@@ -61,23 +62,24 @@ class CountriesFragment : Fragment() {
 
     }
 
-    private fun observeModel(){
+    private fun observeModel() {
         viewModel.getCountries().observe(viewLifecycleOwner, Observer { countriesList ->
-            if(countriesList.isNotEmpty()){
-                loading_progressBar.visibility = View.INVISIBLE
-                countries_recyclerView.visibility = View.VISIBLE
-                countriesAdapter.updateCountriesList(countriesList as ArrayList<Country>)
 
+            countriesList?.let {
+                if (countriesList.isNotEmpty()) {
+                    loading_progressBar.visibility = View.INVISIBLE
+                    countries_recyclerView.visibility = View.VISIBLE
+                    countriesAdapter.updateCountriesList(countriesList as ArrayList<Country>)
+                }
             }
-
         })
 
-        viewModel.getIsLoading().observe(viewLifecycleOwner, Observer {isLoading ->
+        viewModel.getIsLoading().observe(viewLifecycleOwner, Observer { isLoading ->
             isLoading?.let {
-                if(isLoading){
+                if (isLoading) {
                     countries_recyclerView.visibility = View.INVISIBLE
                     loading_progressBar.visibility = View.VISIBLE
-                }else{
+                } else {
                     countries_recyclerView.visibility = View.VISIBLE
                     loading_progressBar.visibility = View.INVISIBLE
                 }
@@ -85,8 +87,8 @@ class CountriesFragment : Fragment() {
 
         })
 
-        viewModel.getErrorLoading().observe(viewLifecycleOwner, Observer {isError ->
-            if(isError){
+        viewModel.getErrorLoading().observe(viewLifecycleOwner, Observer { isError ->
+            if (isError) {
                 error_message.visibility = View.VISIBLE
                 loading_progressBar.visibility = View.INVISIBLE
                 countries_recyclerView.visibility = View.INVISIBLE

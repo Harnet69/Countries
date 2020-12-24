@@ -1,5 +1,6 @@
 package com.harnet.countries.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,6 +13,9 @@ class CountriesAdapter(private var countriesList: ArrayList<Country>) :
     RecyclerView.Adapter<CountriesAdapter.ImagesViewHolder>() {
 
     fun updateCountriesList(newCountriesList: ArrayList<Country>) {
+        for(country: Country in newCountriesList){
+            Log.i("updateCountriesListQrr", country.name.toString())
+        }
         if (newCountriesList.isNotEmpty()) {
             countriesList.clear()
             countriesList.addAll(newCountriesList)

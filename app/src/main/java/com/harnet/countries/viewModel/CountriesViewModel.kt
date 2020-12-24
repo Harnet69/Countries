@@ -1,6 +1,5 @@
 package com.harnet.countries.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.countries.model.CountriesApiService
@@ -9,7 +8,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class CountriesViewModel : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -25,35 +25,12 @@ class CountriesViewModel : ViewModel() {
     fun getIsLoading() = mIsLoading
     fun getErrorLoading() = mErrorLoading
 
-    fun refresh(){
+    fun refresh() {
         getCountryFromAPI()
     }
 
-    private fun getCountryFromAPI(){
+    private fun getCountryFromAPI() {
         mIsLoading.value = true
-
-//        val countries = mutableListOf<Country>()
-//    // mock countries getting
-//        //TODO implement Retrofit functionality here
-//        countries.add(Country("Russia", "Moscow", ""))
-//        countries.add(Country("Poland", "Warsaw", ""))
-//        countries.add(Country("Belarus", "Minsk", ""))
-//        countries.add(Country("England", "London", ""))
-//        countries.add(Country("USA", "Washington", ""))
-//        countries.add(Country("Lithuania", "Vilnius", ""))
-//
-//        if(countries.isNotEmpty()){
-//            coroutineScope.launch {
-//                coroutineScope.async {
-//                    delay(3000)
-//                    mCountries.value = countries
-//                    mIsLoading.value = false
-//                }
-//            }
-//        }
-
-        //TODO mIsLoading.value = false and mErrorLoading = true if Retrofit can't get a data
-
 
         disposable.add(
             // set it to a different thread(passing this call to the background thread)
@@ -79,7 +56,7 @@ class CountriesViewModel : ViewModel() {
         )
     }
 
-    private fun retrieveCountries(countriesList: List<Country>){
+    private fun retrieveCountries(countriesList: List<Country>) {
         mCountries.value = countriesList
         mIsLoading.value = false
         mErrorLoading.value = false
