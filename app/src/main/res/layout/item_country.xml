@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="country"
+            type="com.harnet.countries.model.Country" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,8 +27,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                android:bindImageUrl="@{country.flag}"
+                android:contentDescription="@string/country_flag"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/country_name"
@@ -30,16 +37,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/countryFlagUrl"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:visibility="gone"/>
+                android:text="@{country.name}" />
 
             <TextView
                 android:id="@+id/country_capital"
@@ -47,7 +46,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:text="@{country.capital}" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

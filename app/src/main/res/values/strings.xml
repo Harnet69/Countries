@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Countries</string>
     <string name="error_get_data">Error with data retrieving</string>
+    <string name="country_flag">Country flag</string>
 </resources>
