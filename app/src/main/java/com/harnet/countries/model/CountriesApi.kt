@@ -1,14 +1,9 @@
 package com.harnet.countries.model
 
-import io.reactivex.Single
 import retrofit2.http.GET
 
 interface CountriesApi {
     // whole URL is https://raw.githubusercontent.com/DevTides/countries/master/countriesV2.json
-
-    // annotation used for knowing how this method can be used
-    @GET("DevTides/countries/master/countriesV2.json")// !!!this is an end point, not all url
-    fun getCountries(): Single<List<Country>>
-
-    // it can be several methods for different kinds of a data
+    @GET("DevTides/countries/master/countriesV2.json")
+    suspend fun getCountries(): retrofit2.Response<List<Country>>
 }
