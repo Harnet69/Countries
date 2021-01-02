@@ -4,10 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.countries.model.CountriesApiService
 import com.harnet.countries.model.Country
+import com.harnet.countries.model.DaggerCountriesApiServiceComponent
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 class CountriesViewModel : ViewModel() {
-    private val countriesApiService = CountriesApiService()
+    // instance which works through Dagger's dependency injections
+    @Inject
+    lateinit var countriesApiService: CountriesApiService
+
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         onError("Exception ${throwable.localizedMessage}")
@@ -26,9 +31,14 @@ class CountriesViewModel : ViewModel() {
     }
 
     private fun getCountryFromAPI() {
+        // Dagger generated class
+        val countriesApiServiceComponent = DaggerCountriesApiServiceComponent.create()
+        // inject all dependencies to the class
+        countriesApiServiceComponent.inject(this)
+
         mIsLoading.value = true
 
-        // variable job is used for cancelling if viewModel is desmissed
+        // variable job is used for cancelling if viewModel is dismissed
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             delay(1000L) // for simulating data downloading delaying
             val response = countriesApiService.getCountriesApi().getCountries()
