@@ -7,7 +7,7 @@ import com.harnet.countries.model.Country
 import kotlinx.coroutines.*
 
 class CountriesViewModel : ViewModel() {
-    private val countriesApiService = CountriesApiService.getCountries()
+    private val countriesApiService = CountriesApiService()
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         onError("Exception ${throwable.localizedMessage}")
@@ -31,7 +31,7 @@ class CountriesViewModel : ViewModel() {
         // variable job is used for cancelling if viewModel is desmissed
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             delay(1000L) // for simulating data downloading delaying
-            val response = countriesApiService.getCountries()
+            val response = countriesApiService.getCountriesApi().getCountries()
             // switch for updating the UI thread
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {

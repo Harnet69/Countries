@@ -3,7 +3,7 @@ package com.harnet.countries.model
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object CountriesApiService {
+class CountriesApiService {
     // base URL of the API
     private val BASE_URL = "https://raw.githubusercontent.com"
 
@@ -16,7 +16,7 @@ object CountriesApiService {
         .create(CountriesApi::class.java)// create model class
 
     //get observable List from API
-    fun getCountries(): CountriesApi {
+    fun getCountriesApi(): CountriesApi {
         return api
     }
 }
