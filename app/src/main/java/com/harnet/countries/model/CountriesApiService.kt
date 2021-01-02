@@ -3,7 +3,9 @@ package com.harnet.countries.model
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CountriesApiService @Inject constructor() {
     // base URL of the API
     private val BASE_URL = "https://raw.githubusercontent.com"

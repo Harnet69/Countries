@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.countries.model.CountriesApiService
 import com.harnet.countries.model.Country
-import com.harnet.countries.model.DaggerCountriesApiServiceComponent
+import com.harnet.countries.model.di.DaggerCountriesApiServiceComponent
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -26,16 +26,16 @@ class CountriesViewModel : ViewModel() {
     fun getIsLoading() = mIsLoading
     fun getErrorLoading() = mErrorLoading
 
+    init {
+        // call Dagger generated class and inject there all dependencies
+        DaggerCountriesApiServiceComponent.create().inject(this)
+    }
+
     fun refresh() {
         getCountryFromAPI()
     }
 
     private fun getCountryFromAPI() {
-        // Dagger generated class
-        val countriesApiServiceComponent = DaggerCountriesApiServiceComponent.create()
-        // inject all dependencies to the class
-        countriesApiServiceComponent.inject(this)
-
         mIsLoading.value = true
 
         // variable job is used for cancelling if viewModel is dismissed
