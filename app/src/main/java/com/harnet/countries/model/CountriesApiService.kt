@@ -19,7 +19,6 @@ class CountriesApiService @Inject constructor() {
         .create(CountriesApi::class.java)// create model class
 
     //get observable List from API
-    @Inject
     fun getCountriesApi(): CountriesApi {
         return api
     }
