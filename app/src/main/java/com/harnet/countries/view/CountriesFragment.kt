@@ -16,14 +16,23 @@ import com.harnet.countries.R
 import com.harnet.countries.adapter.CountriesAdapter
 import com.harnet.countries.databinding.CountriesFragmentBinding
 import com.harnet.countries.model.Country
+import com.harnet.countries.model.di.DaggerCountriesApiServiceComponent
 import com.harnet.countries.util.setActivityTitle
 import kotlinx.android.synthetic.main.countries_fragment.*
+import javax.inject.Inject
 
 class CountriesFragment : Fragment() {
+    @Inject
     lateinit var countriesAdapter: CountriesAdapter
+
     lateinit var dataBinding: CountriesFragmentBinding
 
     private lateinit var viewModel: CountriesViewModel
+
+    init {
+        // inject adapter with empty list as an argument
+        DaggerCountriesApiServiceComponent.create().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +46,7 @@ class CountriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countriesAdapter = CountriesAdapter(arrayListOf())
+//        countriesAdapter = CountriesAdapter(arrayListOf())
 
         viewModel = ViewModelProvider(this).get(CountriesViewModel::class.java)
 
