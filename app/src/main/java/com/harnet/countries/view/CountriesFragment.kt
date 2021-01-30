@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.countries.viewModel.CountriesViewModel
 import com.harnet.countries.R
 import com.harnet.countries.adapter.CountriesAdapter
+import com.harnet.countries.adapter.SwipeToDelete
 import com.harnet.countries.databinding.CountriesFragmentBinding
 import com.harnet.countries.model.Country
 import com.harnet.countries.model.di.DaggerCountriesApiServiceComponent
@@ -57,6 +59,10 @@ class CountriesFragment : Fragment() {
         countries_recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = countriesAdapter
+
+            //Swipe to delete
+            val itemTouchHelper = ItemTouchHelper(SwipeToDelete(countriesAdapter))
+            itemTouchHelper.attachToRecyclerView(countries_recyclerView)
         }
 
         // add separation line between items

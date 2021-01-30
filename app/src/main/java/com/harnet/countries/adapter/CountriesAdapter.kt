@@ -3,6 +3,7 @@ package com.harnet.countries.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.countries.R
@@ -36,6 +37,12 @@ class CountriesAdapter(private var countriesList: ArrayList<Country>) :
             false
         )
         return ImagesViewHolder(view)
+    }
+
+    // Swipe to delete
+    fun deleteItem(pos: Int){
+        countriesList.removeAt(pos)
+        notifyItemRemoved(pos)
     }
 
     class ImagesViewHolder(var view: ItemCountryBinding) : RecyclerView.ViewHolder(view.root)
