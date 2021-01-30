@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class SwipeToDelete(var adapter: CountriesAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
@@ -13,8 +14,10 @@ class SwipeToDelete(var adapter: CountriesAdapter): ItemTouchHelper.SimpleCallba
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        //pass context for Toast
+        var context = viewHolder.itemView.context
         val pos = viewHolder.adapterPosition
-        adapter.deleteItem(pos)
+        adapter.deleteItem(pos, context)
     }
 
 }
